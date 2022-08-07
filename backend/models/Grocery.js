@@ -8,12 +8,15 @@ const GrocerySchema = new Schema({
         required: true
     },
     tags: {
-        type: [String],
-        required: true
+        type: [String]
     },
     quantity: {
         type: Number,
+        default: 1,
         required: true
+    },
+    notes: {
+        type: String
     },
     calories: {
         type: Number
