@@ -2,8 +2,8 @@ const GroceryDetails = ({ grocery }) => {
     return (
         <div className="grocery-details">
             <h3>{grocery.name}</h3>
-            <p><strong>Quantity: {grocery.quantity}</strong></p>
-            {grocery.calories >= 0 && <p>calories: {grocery.calories}</p>}
+            <p><strong>Quantity: {grocery.quantity || 1}</strong></p>
+            {grocery.calories && <p>calories: {grocery.calories}</p>}
             {grocery.notes && <p className="notes" style={{fontSize: 'smaller', color: 'gray'}}>notes: {grocery.notes}</p>}
             {grocery.tags && 
            grocery.tags.map((tag, index) =>{ 

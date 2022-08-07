@@ -28,16 +28,16 @@ const addGrocery = async(req, res) => {
         return res.status(200).send(grocery);
     }
     if (quantity < 0) {
-        return res.send("Please enter a valid quantity");
+        return res.status(400).send({error: "Please enter a valid quantity"});
     }
     if (calories < 0) {
-        return res.send("Please enter a number");
+        return res.status(400).json({error:"Please enter a valid number"});
     }
     try {
         const grocery = await Grocery.create({name, tags, quantity, calories});
         res.status(200).send(grocery);
     } catch (err) {
-        res.status(400).json({error: err.message});
+        res.status(400).json({error: '"Name" is required'});
     }
 };
 //delete a grocery item

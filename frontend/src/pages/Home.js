@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import GroceryDetails from "../components/GroceryDetails.js"
+import GroceryForm from "../components/GroceryForm.js";
 const Home = () => {
     const [groceries, setGroceries] = useState(null);
     useEffect(() => {
@@ -21,6 +22,7 @@ const Home = () => {
 
                 })} 
             </div>
+            <GroceryForm/>
         </div>
     )
 };

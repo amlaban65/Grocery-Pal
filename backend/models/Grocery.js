@@ -13,7 +13,6 @@ const GrocerySchema = new Schema({
     quantity: {
         type: Number,
         default: 1,
-        required: true
     },
     notes: {
         type: String
