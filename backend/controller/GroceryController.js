@@ -19,22 +19,23 @@ const getGrocery = async(req, res) => {
 }
 //create a grocery item
 const addGrocery = async(req, res) => {
-    const{name, tags, quantity, calories} = req.body;
+    const{name, tags, quantity, calories, notes} = req.body;
     const checkIfExists = await Grocery.findOne({name:name});
     if (checkIfExists) {
         //if item exists, increment quantity
+        if (!checkIfExists.quantity) checkIfExists.quantity = 1;
         const grocery = await Grocery.findOneAndUpdate({name: name}, {quantity: 
             checkIfExists.quantity + 1}, {new: true});
         return res.status(200).send(grocery);
     }
     if (quantity < 0) {
-        return res.status(400).send({error: "Please enter a valid quantity"});
+        return res.status(400).json({error: "Please enter a valid quantity"});
     }
     if (calories < 0) {
         return res.status(400).json({error:"Please enter a valid number"});
     }
     try {
-        const grocery = await Grocery.create({name, tags, quantity, calories});
+        const grocery = await Grocery.create({name, tags, quantity, calories, notes});
         res.status(200).send(grocery);
     } catch (err) {
         res.status(400).json({error: '"Name" is required'});
@@ -45,11 +46,10 @@ const deleteGrocery = async(req, res) => {
     const { id } = req.params;
     try {
         const grocery =  await Grocery.findByIdAndDelete(id);
-        if (!grocery) return res.status(404).send("Not found!");
-        res.status(200).send(grocery.name + 
-            " has been removed from your shopping list");
+        if (!grocery) return res.status(404).json("Not found!");
+        res.status(200).json(grocery);
     } catch(err) {
-        res.status(404).send("Not found!");
+        res.status(404).json("Not found!");
     }
 }
 // update a grocery item
