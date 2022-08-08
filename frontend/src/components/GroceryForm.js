@@ -1,4 +1,5 @@
 import { useState } from "react"
+import useGroceryContext from "../hooks/useGroceriesContext";
 
 const GroceryForm = () => {
     const[name, setName] = useState('');
@@ -7,6 +8,7 @@ const GroceryForm = () => {
     const[calories, setCalories] = useState('');
     const[notes, setNotes] = useState('');
     const[error, setError] = useState('');
+    const {dispatch} = useGroceryContext();
     const handleSubmit = async(e) => {
         e.preventDefault();
         const grocery = {name, quantity, tags, calories, notes};
@@ -27,42 +29,48 @@ const GroceryForm = () => {
             setNotes('');
             setQuantity('');
             setError(null);
-            console.log("grocery added");
+            dispatch({type: "ADD_GROCERY", payload: json})
         }
     }
     return (
         <form className="create" onSubmit={handleSubmit}>
             <h3>Add something to your shopping list</h3>
-            <label>Name:</label>
+            <label><span style={{color: 'red'}}>*</span>Name:</label>
             <input
             type="text"
+            placeholder="e.g. bread, beef, etc.."
             onChange={(e) => setName(e.target.value)}
             value={name} 
             />
             <label>Quantity:</label>
             <input
             type="number"
+            placeholder="default: 1"
             onChange={(e) => setQuantity(e.target.value)}
             value={quantity} 
             />
             <label>tags:</label>
             <input
             type="text"
+            placeholder="e.g. pastries, meats, etc.."
             onChange={(e) => setTags(e.target.value)}
             value={tags} 
             />
             <label>calories:</label>
             <input
             type="number"
+            placeholder="to keep your diet in check ;)..."
             onChange={(e) => setCalories(e.target.value)}
             value={calories} 
             />
             <label>notes:</label>
             <input
             type="text"
+            placeholder='e.g. Get XYZ brand'
             onChange={(e) => setNotes(e.target.value)}
             value={notes} 
             />
+            <div style={{fontSize:"smaller", color:"gray", marginBottom:"20px"}}>* denotes a required field</div>
             <button>Add Grocery Item</button>
             {error && <div className="error">An error has occurred: {error}</div>}
         </form>

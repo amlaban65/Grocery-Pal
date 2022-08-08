@@ -57,14 +57,24 @@ header a {
   color: #555;
 }
 .grocery-details span {
+  cursor: pointer;
+  background: #f1f1f1;
+  border-radius: 50%;
+  color: #333;
+}
+.grocery-details .check  {
+  /* box-shadow: 1px 1px 1px 1px; */
+  background-color: rgba(9, 147, 9, 0.28);
   position: absolute;
   top: 20px;
   right: 20px;
-  cursor: pointer;
-  background: #f1f1f1;
-  padding: 6px;
-  border-radius: 50%;
-  color: #333;
+  padding: 1px;
+}
+.grocery-details .delete  {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 2px;
 }
 label, input {
   display: block;
