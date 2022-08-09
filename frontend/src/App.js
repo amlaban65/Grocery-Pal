@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Landing from './pages/Landing'
 import Navbar from './components/navbar'
 import useAuthContext from './hooks/useAuthContext'
 function App() {
@@ -16,7 +17,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Home /> : <Navigate to="/login"/>}
+              element={user ? <Home /> : <Navigate to="/landing"/>}
             />
             <Route 
               path="/login" 
@@ -25,6 +26,10 @@ function App() {
             <Route 
               path="/signup" 
               element={!user ? <Signup /> : <Navigate to="/"/>} 
+            />
+            <Route 
+            path="/landing"
+            element= {<Landing />}
             />
           </Routes>
         </div>
