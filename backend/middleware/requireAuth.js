@@ -7,8 +7,8 @@ const requireAuth = async (req, res, next) => {
         error: "You are not logged in"});
     const token = authorization.split(' ')[1];
     try {
-        const {id} = jwt.verify(token, process.env.SECRET);
-        req.user = await User.findOne({id}).select('_id')
+        const { _id } = jwt.verify(token, process.env.SECRET)
+        req.user = await User.findOne({ _id }).select('_id')
         next();
     } catch (error) {
         res.status(401).json({

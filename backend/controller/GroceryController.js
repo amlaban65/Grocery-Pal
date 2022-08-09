@@ -21,11 +21,12 @@ const getGrocery = async(req, res) => {
 //create a grocery item
 const addGrocery = async(req, res) => {
     const{name, tags, quantity, calories, notes} = req.body;
-    const checkIfExists = await Grocery.findOne({name:name});
+    const user_id = req.user._id
+    const checkIfExists = await Grocery.findOne({name:name, user_id: user_id});
     if (checkIfExists) {
         //if item exists, increment quantity
         if (!checkIfExists.quantity) checkIfExists.quantity = 1;
-        const grocery = await Grocery.findOneAndUpdate({name: name}, {quantity: 
+        const grocery = await Grocery.findOneAndUpdate({name: name, user_id: user_id}, {quantity: 
             checkIfExists.quantity + 1}, {new: true});
         return res.status(200).send(grocery);
     }
@@ -36,7 +37,6 @@ const addGrocery = async(req, res) => {
         return res.status(400).json({error:"Please enter a valid number"});
     }
     try {
-        const user_id = req.user._id
         const grocery = await Grocery.create({name, tags, quantity, calories, notes, user_id});
         res.status(200).json(grocery);
     } catch (err) {
