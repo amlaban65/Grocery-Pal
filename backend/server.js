@@ -17,7 +17,7 @@ app.use('/api/user', userRoutes);
 //connect to db
 mongoose.connect(process.env.MONGO)
 .then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT || 5000, () => {
         console.log("Connected to backend.");
     });
 })
