@@ -1,4 +1,5 @@
 import { useState } from "react"
+import useAuthContext from "../hooks/useAuthContext";
 import useGroceryContext from "../hooks/useGroceriesContext";
 
 const GroceryForm = () => {
@@ -9,15 +10,21 @@ const GroceryForm = () => {
     const[notes, setNotes] = useState('');
     const[error, setError] = useState('');
     const {dispatch} = useGroceryContext();
+    const {user} = useAuthContext();
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if (!user) {
+            setError("Please log in");
+            return;
+        }
         const grocery = {name, quantity, tags, calories, notes};
 
         const response = await fetch("/api/grocery", {
             method: "POST",
             body: JSON.stringify(grocery),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
         const json = await response.json();

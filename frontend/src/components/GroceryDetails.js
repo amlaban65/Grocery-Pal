@@ -1,11 +1,17 @@
 import useGroceryContext from "../hooks/useGroceriesContext";
 import 'material-symbols';
+import useAuthContext from "../hooks/useAuthContext";
 
 const GroceryDetails = ({ grocery }) => {
     const {dispatch} = useGroceryContext();
+    const {user} = useAuthContext();
     const handleClick = async () => {
+        if (!user) return;
         const response = await fetch("/api/grocery/"+ grocery._id,
-        {method: "DELETE"})
+        {method: "DELETE",
+    headers: {
+        'Authorization': `Bearer ${user.token}`
+    }})
         const json = await response.json();
         if (response.ok)  dispatch({type: "DELETE_GROCERY", payload: json});
     }

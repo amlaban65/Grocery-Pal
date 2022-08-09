@@ -1,8 +1,12 @@
 const express = require('express');
 const { addGrocery, getAllGrocery, getGrocery, deleteGrocery, updateGrocery } = require('../controller/GroceryController.js');
 const Grocery = require("../models/Grocery.js");
+const requireAuth = require("../middleware/requireAuth.js");
 
 const router = express.Router();
+
+//ensure user is authenticated
+router.use(requireAuth);
 //POST a new grocery item
 router.post('/', addGrocery);
 
