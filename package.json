@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/amlaban65/Workout-Pal/issues"
   },
-  "homepage": "https://github.com/amlaban65/Workout-Pal#readme"
+  "homepage": "https://github.com/amlaban65/Workout-Pal#readme",
+  "dependencies": {
+    "heroku": "^7.62.0"
+  }
 }
