@@ -2,7 +2,8 @@ const Grocery = require("../models/Grocery.js");
 
 //get all groceries
 const getAllGrocery = async(req, res) => {
-    const groceries = await Grocery.find({}).sort({updatedAt: -1});
+    const user_id = req.user._id
+    const groceries = await Grocery.find({ user_id }).sort({updatedAt: -1})
     res.status(200).json(groceries);
 }
 
@@ -35,9 +36,11 @@ const addGrocery = async(req, res) => {
         return res.status(400).json({error:"Please enter a valid number"});
     }
     try {
-        const grocery = await Grocery.create({name, tags, quantity, calories, notes});
-        res.status(200).send(grocery);
+        const user_id = req.user._id
+        const grocery = await Grocery.create({name, tags, quantity, calories, notes, user_id});
+        res.status(200).json(grocery);
     } catch (err) {
+        console.log(err);
         res.status(400).json({error: '"Name" is required'});
     }
 };

@@ -19,7 +19,11 @@ const GrocerySchema = new Schema({
     },
     calories: {
         type: Number
-    }
+    }, 
+    user_id: {
+        type: String,
+        required: true
+      }
 },{timestamps: true});
 module.exports = mongoose.model("Grocery", GrocerySchema);
 
